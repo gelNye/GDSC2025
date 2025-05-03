@@ -102,35 +102,63 @@ class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Enter Your Fitness Goals')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              decoration:
-                  InputDecoration(labelText: 'What are your fitness goals?'),
+      appBar: AppBar(
+        title: Text('[NAME HERE]'),
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color.fromARGB(255, 175, 114, 255), const Color.fromARGB(255, 255, 116, 156)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed:
-                  _isLoading ? null : () => _sendToGemini(_controller.text),
-              child: Text('Generate Plan'),
-            ),
-            SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : Expanded(
-                    child: SingleChildScrollView(
-                      child: Text(_response),
+          ),
+        ),
+      ),
+
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [const Color.fromARGB(255, 210, 175, 255), const Color.fromARGB(255, 255, 182, 202)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+              "[NAME HERE] uses the power of Google Gemini to streamline your experience at the gym. [NAME HERE] is an excellent tool for beginners that tailors a unique workout based on your prompt. A series of exercises will be generated alongside the recommended number of reps, sets and duration of rest",
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: _controller,
+                decoration: InputDecoration(labelText: 'What are your fitness goals?'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _isLoading ? null : () => _sendToGemini(_controller.text),
+                child: Text('Generate Plan'),
+              ),
+              SizedBox(height: 20),
+              _isLoading
+                  ? CircularProgressIndicator()
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(_response),
+                      ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
 
 class FitnessHomeWithNavBar extends StatefulWidget {
@@ -154,7 +182,7 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
     ];
 
     return Scaffold(
-      
+      //appBar: AppBar(title: Text('Fitness App')),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
