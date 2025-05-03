@@ -72,10 +72,18 @@ class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
     final response = await http.post(Uri.parse(url), headers: headers, body: body);
     final data = jsonDecode(response.body);
 
-    final generatedText = data['candidates']?[0]?['content']?['parts']?[0]?['text'] ?? '[]';
+    final generatedTextRaw = data['candidates']?[0]?['content']?['parts']?[0]?['text'] ?? '[]';
 
-    // Try parsing the response text to JSON
+    // Clean up Markdown code block formatting
+    final generatedText = generatedTextRaw
+    .replaceAll(RegExp(r'```json'), '')
+    .replaceAll(RegExp(r'```'), '')
+    .trim();
+
+    // Now this should parse cleanly
     final List<dynamic> exercises = jsonDecode(generatedText);
+
+
 
     // Navigate to schedule page if context is still valid
     if (context.mounted) {
