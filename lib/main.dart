@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'dart:convert';
 import 'screens/fitness_plan_scheudle.dart';
 import 'screens/daily_exercises.dart';
+import 'screens/progress_calander_page.dart'; // Import the calendar page
 
 void main() {
   runApp(MyApp());
@@ -149,6 +150,7 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
     final List<Widget> pages = [
       FitnessPlanSchedule(exercises: widget.exercises),
       DailyExercises(exercises: widget.exercises),
+      ProgressCalendarPage(), // Add the calendar page here
     ];
 
     return Scaffold(
@@ -161,6 +163,8 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
               icon: Icon(Icons.fitness_center), label: 'Plan'),
           BottomNavigationBarItem(
               icon: Icon(Icons.check_circle), label: 'Daily'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: 'Calendar'), // Calendar Tab
         ],
         onTap: (index) {
           setState(() {
