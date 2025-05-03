@@ -154,7 +154,7 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: Text('Fitness App')),
+      
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
