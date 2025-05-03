@@ -6,8 +6,6 @@ class ProgressCalendarPage extends StatefulWidget {
 }
 
 class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
-  // Simulating the progress data (green for good, red for bad)
-  // You could replace this with real data from a database or shared preferences
   final List<bool> _progress = List.generate(30, (index) => index % 2 == 0);
 
   @override
@@ -20,7 +18,7 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7, // 7 boxes in a row (one for each day of the week)
+            crossAxisCount: 7, 
             crossAxisSpacing: 8.0,
             mainAxisSpacing: 8.0,
           ),
@@ -29,7 +27,7 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
             bool isGood = _progress[index];
             return GestureDetector(
               onTap: () {
-                // You can add functionality here when a user taps a day
+                
               },
               child: Container(
                 decoration: BoxDecoration(
