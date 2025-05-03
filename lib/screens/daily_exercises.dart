@@ -10,17 +10,17 @@ class DailyExercises extends StatefulWidget {
 }
 
 class _DailyExercisesState extends State<DailyExercises> {
-  late List<bool> _completedExercises;
+  late List<dynamic> _remainingExercises;
 
   @override
   void initState() {
     super.initState();
-    _completedExercises = List<bool>.filled(widget.exercises.length, false);
+    _remainingExercises = List.from(widget.exercises); // Copy the exercises list
   }
 
-  void _toggleCheckbox(int index) {
+  void _completeExercise(int index) {
     setState(() {
-      _completedExercises[index] = !_completedExercises[index];
+      _remainingExercises.removeAt(index);
     });
   }
 
@@ -28,46 +28,51 @@ class _DailyExercisesState extends State<DailyExercises> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Daily Exercises')),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16),
-        itemCount: widget.exercises.length,
-        itemBuilder: (context, index) {
-          final exercise = widget.exercises[index];
-          return Card(
-            margin: EdgeInsets.only(bottom: 12),
-            elevation: 3,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: _completedExercises[index],
-                    onChanged: (bool? value) {
-                      _toggleCheckbox(index);
-                    },
+      body: _remainingExercises.isEmpty
+          ? Center(child: Text('All exercises completed! 🎉'))
+          : ListView.builder(
+              padding: EdgeInsets.all(16),
+              itemCount: _remainingExercises.length,
+              itemBuilder: (context, index) {
+                final exercise = _remainingExercises[index];
+                return Card(
+                  margin: EdgeInsets.only(bottom: 12),
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
                       children: [
-                        Text(
-                          exercise['name'] ?? 'Unnamed Exercise',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        Checkbox(
+                          value: false,
+                          onChanged: (_) => _completeExercise(index),
                         ),
-                        SizedBox(height: 8),
-                        Text('Reps: ${exercise['reps']}'),
-                        Text('Sets: ${exercise['sets']}'),
-                        Text('Rest Duration: ${exercise['rest_duration']}'),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                exercise['name'] ?? 'Unnamed Exercise',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text('Reps: ${exercise['reps']}'),
+                              Text('Sets: ${exercise['sets']}'),
+                              Text('Rest Duration: ${exercise['rest_duration']}'),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
