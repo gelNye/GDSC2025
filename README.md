@@ -1,4 +1,4 @@
-# 🏋️‍♂️ Fitness Goals App
+# 🏋️‍♂️ Jym.ai
 
 A Flutter app that helps users generate personalized fitness plans using Google Gemini AI, track their daily exercises, and monitor progress through a visual calendar.
 
