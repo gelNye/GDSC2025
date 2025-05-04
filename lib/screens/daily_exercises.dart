@@ -29,7 +29,7 @@ class _DailyExercisesState extends State<DailyExercises> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Daily Exercises',
+          'Your Daily Exercises',
           style: TextStyle(
             fontSize: 30, // Increase this value to make the text bigger
             fontWeight: FontWeight.bold, // Optional: Makes text bold
@@ -57,7 +57,14 @@ class _DailyExercisesState extends State<DailyExercises> {
           ),
         ),
         child: _remainingExercises.isEmpty
-            ? Center(child: Text('All exercises completed! 🎉', style: TextStyle(color: Colors.white)))
+            ? Center(child: Text(
+                'All exercises completed! 🎉', 
+                style: 
+                  TextStyle(
+                    color: Colors.black,
+                    fontSize: 48)
+                )
+              )
             : ListView.builder(
                 padding: EdgeInsets.all(16),
                 itemCount: _remainingExercises.length,

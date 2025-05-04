@@ -72,7 +72,14 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Progress Calendar'),
+        title: Text(
+          'Your Progress Calendar',
+          style: TextStyle(
+            fontSize: 30, // Increase this value to make the text bigger
+            fontWeight: FontWeight.bold, // Optional: Makes text bold
+            color: Colors.black, // Ensures text color remains visible
+          ),
+        ),
         foregroundColor: Colors.black,
         centerTitle: true,
         flexibleSpace: Container(
@@ -151,10 +158,10 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
                 fontSize: 12,
                   color: Colors.grey, // Grey text
                   fontWeight: FontWeight.bold,
-    ),
               ),
-  ),
-),
+              ),
+            ),
+          ),
           ],
         ),
       ),
