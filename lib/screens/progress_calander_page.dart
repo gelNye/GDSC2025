@@ -34,39 +34,62 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Progress Calendar'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7, 
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color.fromARGB(255, 175, 114, 255), const Color.fromARGB(255, 255, 116, 156)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
-          itemCount: _progress.length, // 30 days
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: _getColorForValue(_progress[index]),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Center(
-                  child: Text(
-                    '${index + 1}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [const Color.fromARGB(255, 210, 175, 255), const Color.fromARGB(255, 255, 182, 202)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Padding(
+          
+          padding: const EdgeInsets.all(16.0),
+          
+          child: GridView.builder(
+            
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 7, 
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 8.0,
+            ),
+            itemCount: _progress.length, // 30 days
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: _getColorForValue(_progress[index]),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${index + 1}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
+              );
+            },
+          ),
+        )
       ),
     );
   }
