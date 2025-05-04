@@ -103,8 +103,15 @@ class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('[NAME HERE]'),
-        foregroundColor: Colors.black,
+        title: Text(
+          'Jym.ai',
+          style: TextStyle(
+            fontSize: 30, // Increase this value to make the text bigger
+            fontWeight: FontWeight.bold, // Optional: Makes text bold
+            color: Colors.black, // Ensures text color remains visible
+          ),
+        ),
+
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -130,9 +137,9 @@ class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
           child: Column(
             children: [
               Text(
-              "[NAME HERE] uses the power of Google Gemini to streamline your experience at the gym. [NAME HERE] is an excellent tool for beginners that tailors a unique workout based on your prompt. A series of exercises will be generated alongside the recommended number of reps, sets and duration of rest",
+                "    Jym.ai uses the power of Google Gemini to streamline your experience at the gym. Jym.ai is an excellent tool for beginners that tailors a unique workout based on your prompt. A series of exercises will be generated alongside the recommended number of reps, sets and duration of rest. ",
                 style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
               SizedBox(height: 16),
               TextField(
