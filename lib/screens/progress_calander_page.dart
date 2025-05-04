@@ -28,10 +28,19 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
 
   void _rateMyScore() {
     int totalScore = 0;
-    int maxPossibleScore = _progress.length * 3; // max value is 3 per day
-    totalScore = _progress.reduce((a, b) => a + b);
+    for (int value in _progress) {
+      if (value == 3) {
+        totalScore += 1;
+      }
+    }
+    int maxScore = 0;
+    for (int value in _progress) {
+      if (value > 1) {
+        maxScore += 1;
+      }
+    }
 
-    double ratingOutOf10 = (totalScore / maxPossibleScore) * 10;
+    double ratingOutOf10 = (totalScore / maxScore) * 10;
     String encouragement;
 
     if (ratingOutOf10 >= 8) {
