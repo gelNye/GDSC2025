@@ -32,11 +32,12 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
   Future<void> _rateMyScore() async {
   int greenDays = _progress.where((val) => val == 3).length;
   int redDays = _progress.where((val) => val == 2).length;
+  double totalResult = (greenDays/(greenDays + redDays))*10;
 
   String prompt =
-      "Give a score out of 10 and encouraging feedback to a user based on their monthly progress. "
+      "Print the score $totalResult out of 10 and give feedback to a user based on their monthly progress. "
       "They marked $greenDays days as completed (green) and $redDays days as skipped (red). "
-      "Be supportive and motivational.";
+      "Be supportive and motivational roughly 90 to 200 words.";
 
   String response = await fetchGeminiResponse(prompt);
 
