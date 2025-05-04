@@ -111,53 +111,82 @@ class _FitnessPlanScheduleState extends State<FitnessPlanSchedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Your Fitness Plan')),
-      body: _loading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: widget.exercises.length,
-              itemBuilder: (context, index) {
-                final exercise = widget.exercises[index];
-                return Card(
-                  margin: EdgeInsets.only(bottom: 12),
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                exercise['name'] ?? 'Unnamed Exercise',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 8),
-                              Text('Reps: ${exercise['reps']}'),
-                              Text('Sets: ${exercise['sets']}'),
-                              Text(
-                                  'Rest Duration: ${exercise['rest_duration']}'),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.help_outline),
-                          tooltip: 'How to do this exercise',
-                          onPressed: () =>
-                              _showExerciseDialog(exercise['name']),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
+      appBar: AppBar(
+        title: Text(
+          'Your Fitness Plan',
+          style: TextStyle(
+            fontSize: 30, // Increase this value to make the text bigger
+            fontWeight: FontWeight.bold, // Optional: Makes text bold
+            color: Colors.black, // Ensures text color remains visible
+          ),
+        ),
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color.fromARGB(255, 175, 114, 255), const Color.fromARGB(255, 255, 116, 156)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [const Color.fromARGB(255, 210, 175, 255), const Color.fromARGB(255, 255, 182, 202)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: _loading
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                padding: EdgeInsets.all(16),
+                itemCount: widget.exercises.length,
+                itemBuilder: (context, index) {
+                  final exercise = widget.exercises[index];
+                  return Card(
+                    color: const Color.fromARGB(255, 255, 241, 230),
+                    margin: EdgeInsets.only(bottom: 12),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  exercise['name'] ?? 'Unnamed Exercise',
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 8),
+                                Text('Reps: ${exercise['reps']}'),
+                                Text('Sets: ${exercise['sets']}'),
+                                Text('Rest Duration: ${exercise['rest_duration']}'),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.help_outline),
+                            tooltip: 'How to do this exercise',
+                            onPressed: () => _showExerciseDialog(exercise['name']),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+      ),
+
     );
   }
 }
