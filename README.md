@@ -21,5 +21,4 @@ A Flutter app that helps users generate personalized fitness plans using Google 
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/your-username/fitness-goals-app.git
-   cd fitness-goals-app
+   git clone https://github.com/gelNye/GDSC2025
