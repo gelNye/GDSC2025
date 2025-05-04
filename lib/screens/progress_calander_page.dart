@@ -137,21 +137,24 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: ElevatedButton(
-                onPressed: _rateMyScore,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurpleAccent,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: Text(
-                  "Rate My Score for the Month",
-                  style: TextStyle(fontSize: 16),
-                ),
+              onPressed: _rateMyScore,
+              style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white, // White background
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
               ),
-            ),
+              ),
+              child: Text(
+              "Rate My Score for the Month",
+                style: TextStyle(
+                fontSize: 12,
+                  color: Colors.grey, // Grey text
+                  fontWeight: FontWeight.bold,
+    ),
+              ),
+  ),
+),
           ],
         ),
       ),
