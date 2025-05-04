@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class ProgressCalendarPage extends StatefulWidget {
   @override
@@ -8,9 +11,9 @@ class ProgressCalendarPage extends StatefulWidget {
 class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
   final List<int> _progress = List.generate(30, (index) {
     if (index > 16) {
-      return 0; // Greater than 16
+      return 0;
     } else if (index == 16) {
-      return 1; // Index 16
+      return 1;
     } else {
       if (index % 4 == 0) {
         return 2;
@@ -26,46 +29,62 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
     }
   });
 
-  void _rateMyScore() {
-    int totalScore = 0;
-    for (int value in _progress) {
-      if (value == 3) {
-        totalScore += 1;
-      }
-    }
-    int maxScore = 0;
-    for (int value in _progress) {
-      if (value > 1) {
-        maxScore += 1;
-      }
-    }
+  Future<void> _rateMyScore() async {
+  int greenDays = _progress.where((val) => val == 3).length;
+  int redDays = _progress.where((val) => val == 2).length;
 
-    double ratingOutOf10 = (totalScore / maxScore) * 10;
-    String encouragement;
+  String prompt =
+      "Give a score out of 10 and encouraging feedback to a user based on their monthly progress. "
+      "They marked $greenDays days as completed (green) and $redDays days as skipped (red). "
+      "Be supportive and motivational.";
 
-    if (ratingOutOf10 >= 8) {
-      encouragement = "Amazing job! Keep pushing yourself!";
-    } else if (ratingOutOf10 >= 5) {
-      encouragement = "You're doing well! A little more consistency and you'll hit your goals!";
-    } else {
-      encouragement = "Every step counts. Keep going — you've got this!";
-    }
+  String response = await fetchGeminiResponse(prompt);
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Your Monthly Score"),
-        content: Text(
-          "Score: ${ratingOutOf10.toStringAsFixed(1)}/10\n\n$encouragement",
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text("Your Monthly Score"),
+      content: SingleChildScrollView(
+        child: MarkdownBody(
+          data: response,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("Thanks!"),
-          ),
-        ],
       ),
-    );
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text("Thanks!"),
+        ),
+      ],
+    ),
+  );
+}
+
+
+  Future<String> fetchGeminiResponse(String prompt) async {
+    const String apiKey = 'AIzaSyCN-FeqVTOCgcCPvwLSLDE6M1VNVvO0LEQ';
+    final String url =
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey';
+
+    final headers = {"Content-Type": "application/json"};
+    final body = jsonEncode({
+      "contents": [
+        {
+          "parts": [
+            {"text": prompt}
+          ]
+        }
+      ]
+    });
+
+    final response = await http.post(Uri.parse(url), headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['candidates']?[0]?['content']?['parts']?[0]?['text'] ??
+          "Couldn't understand the response.";
+    } else {
+      return "Failed to fetch feedback: ${response.reasonPhrase}";
+    }
   }
 
   @override
@@ -75,9 +94,9 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
         title: Text(
           'Your Progress Calendar',
           style: TextStyle(
-            fontSize: 30, // Increase this value to make the text bigger
-            fontWeight: FontWeight.bold, // Optional: Makes text bold
-            color: Colors.black, // Ensures text color remains visible
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         foregroundColor: Colors.black,
@@ -86,8 +105,8 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                const Color.fromARGB(255, 175, 114, 255),
-                const Color.fromARGB(255, 255, 116, 156)
+                Color.fromARGB(255, 175, 114, 255),
+                Color.fromARGB(255, 255, 116, 156),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -99,8 +118,8 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 210, 175, 255),
-              const Color.fromARGB(255, 255, 182, 202)
+              Color.fromARGB(255, 210, 175, 255),
+              Color.fromARGB(255, 255, 182, 202),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -144,24 +163,24 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: ElevatedButton(
-              onPressed: _rateMyScore,
-              style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white, // White background
-              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-              shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              ),
-              ),
-              child: Text(
-              "Rate My Score for the Month",
-                style: TextStyle(
-                fontSize: 12,
-                  color: Colors.grey, // Grey text
-                  fontWeight: FontWeight.bold,
-              ),
+                onPressed: _rateMyScore,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  "Rate My Score for the Month",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-          ),
           ],
         ),
       ),
