@@ -93,9 +93,9 @@ class _ProgressCalendarPageState extends State<ProgressCalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your Progress Calendar',
+          'Progress Calendar',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

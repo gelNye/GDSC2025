@@ -113,7 +113,7 @@ class _FitnessPlanScheduleState extends State<FitnessPlanSchedule> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your Fitness Plan',
+          'Fitness Plan',
           style: TextStyle(
             fontSize: 30, // Increase this value to make the text bigger
             fontWeight: FontWeight.bold, // Optional: Makes text bold

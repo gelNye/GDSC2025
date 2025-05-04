@@ -106,66 +106,81 @@ class _FitnessGoalScreenState extends State<FitnessGoalScreen> {
         title: Text(
           'Jym.ai',
           style: TextStyle(
-            fontSize: 30, // Increase this value to make the text bigger
-            fontWeight: FontWeight.bold, // Optional: Makes text bold
-            color: Colors.black, // Ensures text color remains visible
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
-
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [const Color.fromARGB(255, 175, 114, 255), const Color.fromARGB(255, 255, 116, 156)],
+              colors: [
+                Color.fromARGB(255, 175, 114, 255),
+                Color.fromARGB(255, 255, 116, 156)
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
       ),
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [const Color.fromARGB(255, 210, 175, 255), const Color.fromARGB(255, 255, 182, 202)],
+            colors: [
+              Color.fromARGB(255, 210, 175, 255),
+              Color.fromARGB(255, 255, 182, 202)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Text(
-                "    Jym.ai uses the power of Google Gemini to streamline your experience at the gym. Jym.ai is an excellent tool for beginners that tailors a unique workout based on your prompt. A series of exercises will be generated alongside the recommended number of reps, sets and duration of rest. ",
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(labelText: 'What are your fitness goals?'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _isLoading ? null : () => _sendToGemini(_controller.text),
-                child: Text('Generate Plan'),
-              ),
-              SizedBox(height: 20),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : Expanded(
-                      child: SingleChildScrollView(
-                        child: Text(_response),
-                      ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "    Jym.ai uses the power of Google Gemini to streamline your experience at the gym. Jym.ai is an excellent tool for beginners that tailors a unique workout based on your prompt. A series of exercises will be generated alongside the recommended number of reps, sets and duration of rest.",
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(height: 16),
+                        TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                              labelText: 'What are your fitness goals?'),
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _isLoading
+                              ? null
+                              : () => _sendToGemini(_controller.text),
+                          child: Text('Generate Plan'),
+                        ),
+                        SizedBox(height: 20),
+                        if (_isLoading)
+                          Center(child: CircularProgressIndicator())
+                        else
+                          Text(_response),
+                        Spacer(),
+                      ],
                     ),
-            ],
-          ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
-
 }
 
 class FitnessHomeWithNavBar extends StatefulWidget {
@@ -185,11 +200,10 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
     final List<Widget> pages = [
       FitnessPlanSchedule(exercises: widget.exercises),
       DailyExercises(exercises: widget.exercises),
-      ProgressCalendarPage(), // Add the calendar page here
+      ProgressCalendarPage(),
     ];
 
     return Scaffold(
-      //appBar: AppBar(title: Text('Fitness App')),
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -199,7 +213,7 @@ class _FitnessHomeWithNavBarState extends State<FitnessHomeWithNavBar> {
           BottomNavigationBarItem(
               icon: Icon(Icons.check_circle), label: 'Daily'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Calendar'), // Calendar Tab
+              icon: Icon(Icons.calendar_today), label: 'Calendar'),
         ],
         onTap: (index) {
           setState(() {

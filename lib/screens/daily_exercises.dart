@@ -29,7 +29,7 @@ class _DailyExercisesState extends State<DailyExercises> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your Daily Exercises',
+          'Daily Exercises',
           style: TextStyle(
             fontSize: 30, // Increase this value to make the text bigger
             fontWeight: FontWeight.bold, // Optional: Makes text bold
