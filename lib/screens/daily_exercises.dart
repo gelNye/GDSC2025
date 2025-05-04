@@ -31,7 +31,7 @@ class _DailyExercisesState extends State<DailyExercises> {
         title: Text(
           'Daily Exercises',
           style: TextStyle(
-            fontSize: 30, // Increase this value to make the text bigger
+            fontSize: 20, // Increase this value to make the text bigger
             fontWeight: FontWeight.bold, // Optional: Makes text bold
             color: Colors.black, // Ensures text color remains visible
           ),
@@ -62,7 +62,7 @@ class _DailyExercisesState extends State<DailyExercises> {
                 style: 
                   TextStyle(
                     color: Colors.black,
-                    fontSize: 48)
+                    fontSize: 25)
                 )
               )
             : ListView.builder(
